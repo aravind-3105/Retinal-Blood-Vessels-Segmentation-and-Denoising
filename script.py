@@ -108,7 +108,7 @@ while True:
             f
             for f in file_list
             if os.path.isfile(os.path.join(folder, f))
-            and f.lower().endswith((".png", ".ppm"))
+            and f.lower().endswith((".png", ".ppm",".tif","jpeg","jpg"))
         ]
         window["-FILE LIST-"].update(fnames)
 
@@ -129,7 +129,7 @@ while True:
         except:
             pass
 
-    if PrevAcc == -20 or Acc1 !=PrevAcc:  # A file was chosen from the listbox
+    if PrevAcc == -20 or Acc1 !=PrevAcc or Acc1==-1:  # A file was chosen from the listbox
         print("Trigger")
         try:
             print("Trigger1")
@@ -146,6 +146,7 @@ while True:
                 window["-ROC-"].update("Area Under Curve(AUC): "+str(Auc1))
             size = (300, 300)
             im = imgURL
+            print("Image",imgURL)
             im = cv2.resize(im, size, interpolation = cv2.INTER_AREA)
             image = ImageTk.PhotoImage(image=Image.fromarray(im))
             window["-IMAGE1-"].update(data=image)
