@@ -173,26 +173,31 @@ def Segment(ur):
     out[out!=0] = 255
     print("LOCAL AND AREA")
     #Reference Image 
-    imgRef = cv2.imread("testing/labels-ah/"+url[-10:-3]+"ah.ppm")
-    imgRef = imgRef[:,:,1]
+    urlRef = "testing/labels-ah/"+url[-10:-3]+"ah.ppm"
+    Acc1 = -1
+    Sn1  = -1
+    Sp1  = -1
+    Auc1 = -1
+    if os.path.exists(urlRef):
+        imgRef = cv2.imread(urlRef)
+        imgRef = imgRef[:,:,1]
+        # fig = plt.figure()
+        # fig.add_subplot(1, 2, 1)
+        # plt.imshow(out,cmap='gray')
+        # plt.title('Output')
+        # fig.add_subplot(1, 2, 2)
+        # plt.imshow(imgRef,cmap='gray')
+        # plt.title('Reference Image')
+        # plt.show()
 
-    # fig = plt.figure()
-    # fig.add_subplot(1, 2, 1)
-    # plt.imshow(out,cmap='gray')
-    # plt.title('Output')
-    # fig.add_subplot(1, 2, 2)
-    # plt.imshow(imgRef,cmap='gray')
-    # plt.title('Reference Image')
-    # plt.show()
+        print("All Done")
+        #Performance criteria
+        Acc1,Sn1,Sp1,Auc1 = AccuracyMetrics(out,imgRef)
+        #AccuracyMetrics is a function used to check how accurate the Vessem images in the Dataset are to our acquired output
 
-    print("All Done")
-    #Performance criteria
-    Acc1,Sn1,Sp1,Auc1 = AccuracyMetrics(out,imgRef)
-    #AccuracyMetrics is a function used to check how accurate the Vessem images in the Dataset are to our acquired output
-
-    print(f"Accuracy Value for segmenation is {Acc1}")
-    print(f"Sensitivity for segmenation is {Sn1}")
-    print(f"Specificity for segmenation is {Sp1}")
-    print(f"Receiver Operating Characteristic for segmenation is {Auc1}")
+        print(f"Accuracy Value for segmenation is {Acc1}")
+        print(f"Sensitivity for segmenation is {Sn1}")
+        print(f"Specificity for segmenation is {Sp1}")
+        print(f"Receiver Operating Characteristic for segmenation is {Auc1}")
     return out,Acc1,Sn1,Sp1,Auc1
 # main()
